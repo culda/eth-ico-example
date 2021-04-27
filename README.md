@@ -10,7 +10,5 @@ Crowdsale properties
 - capped at 100 eth (non-zero value transactions will be reverted if cap is exceeded)
 - only accepts whitelisted addresses (must invoke addToWhitelist)
 - the funds are stored in a separate wallet and allocations are stored in a mapping
-- the owner can manually invoke finalize() and finish the sale when the cap is nearly reached
-- [not done] token distribution is done using an off-chain script that will call the transfer method for each member of the allocation mapping
-
-Some tests are included in SaleTests.js
+- the owner can manually invoke finalize() and finish the sale when the cap is practically reached.
+- once finalized, the users can call the claimTokens function to withdraw their tokens.
