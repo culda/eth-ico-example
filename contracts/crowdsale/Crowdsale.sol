@@ -169,9 +169,7 @@ abstract contract Crowdsale is Context, ReentrancyGuard {
      * @param beneficiary Address receiving the tokens
      * @param tokenAmount Number of tokens to be purchased
      */
-    function _processPurchase(address beneficiary, uint256 tokenAmount) internal virtual {
-        _deliverTokens(beneficiary, tokenAmount);
-    }
+    function _processPurchase(address beneficiary, uint256 tokenAmount) internal virtual;
 
     /**
      * @dev Override for extensions that require an internal state to check for validity (current user contributions,

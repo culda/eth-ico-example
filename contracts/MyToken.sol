@@ -16,7 +16,7 @@ contract MyToken is ERC20 {
         _mint(msg.sender, initialSupply);
     }
 
-    function getOwner() public view returns (address) {
+    function getOwner() external view returns (address) {
         return owner;
     }
 

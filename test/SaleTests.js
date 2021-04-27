@@ -3,14 +3,6 @@ const MyToken = artifacts.require("MyToken");
 
 contract('Sale', function(accounts) {
 
-    it('should deploy the token and store the address', function(done){
-        Sale.deployed().then(async function(instance) {
-            const token = await instance.token.call();
-            assert(token, "Token address couldn't be stored");
-            done();
-       });
-    });
-
     it('should have a cap of 100 ETH', function(done){
         Sale.deployed().then(async function(instance) {
             const cap = await instance.cap();
@@ -54,5 +46,28 @@ contract('Sale', function(accounts) {
             }            
             done();
        });
-    });   
+    });
+
+    it('should not allow purchases if finalize is called', function(done){
+        Sale.deployed().then(async function(instance) {
+            await instance.finalize();
+            try {
+                await instance.buyTokens(accounts[4], { from: accounts[4], value: web3.utils.toWei('2', "ether")});
+            }
+            catch (error){
+                assert(true, error.message.includes("Crowdsale is finished"))
+            }            
+            done();
+       });
+    });
+    
+    it('should allow users to claim tokens once finalized', function(done){
+        Sale.deployed().then(async function(instance) {
+            await instance.claimTokens({from: accounts[4]});
+            const token = await MyToken.deployed();
+            const newBalance = await token.balanceOf(accounts[4])
+            assert(web3.utils.toWei('1', 'ether'), newBalance)
+            done();
+       });
+    });      
 });
